@@ -124,6 +124,10 @@ end)
 
 -- Enable break indent
 vim.opt.breakindent = true
+vim.opt.tabstop = 4
+vim.opt.expandtab = true
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
 -- Save undo history
 vim.opt.undofile = true
@@ -151,13 +155,13 @@ vim.opt.splitbelow = true
 --  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = {
-    space = "⋅",
-    tab = "▎_",
-    -- tab = "|_>",
-    trail = "•",
-    extends = "❯",
-    precedes = "❮",
-    nbsp = "",
+  space = '⋅',
+  tab = '▎_',
+  -- tab = "|_>",
+  trail = '•',
+  extends = '❯',
+  precedes = '❮',
+  nbsp = '',
 }
 
 -- Preview substitutions live, as you type!
@@ -170,8 +174,8 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- Don't wrap comments
-vim.cmd('autocmd BufEnter * set formatoptions-=cro')
-vim.cmd('autocmd BufEnter * setlocal formatoptions-=cro')
+vim.cmd 'autocmd BufEnter * set formatoptions-=cro'
+vim.cmd 'autocmd BufEnter * setlocal formatoptions-=cro'
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -792,6 +796,7 @@ require('lazy').setup({
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
           ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<C-k>'] = cmp.mapping.confirm { select = true },
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
@@ -859,12 +864,21 @@ require('lazy').setup({
   -- },
 
   {
-    "ellisonleao/gruvbox.nvim",
+    'ellisonleao/gruvbox.nvim',
     priority = 1000,
     init = function()
-      vim.cmd.colorscheme 'gruvbox'
+      require('gruvbox').setup {
+        italic = {
+          comments = false,
+          folds = false,
+          strings = false,
+          emphasis = false,
+          operators = false,
+        },
+      }
 
-    end
+      vim.cmd.colorscheme 'gruvbox'
+    end,
   },
 
   -- Highlight todo, notes, etc in comments
